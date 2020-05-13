@@ -32,7 +32,7 @@ exports.findOne = (data,callback)=>{
     console.log("login model ",data)
 
     Registration.findById().then(data => {
-        return callback(null,data).json("login sucessfull")
+        return callback(null,data).json("login sucessful")
     }).catch(err =>{
         callback({message:"Error While reterving login id"})
     })

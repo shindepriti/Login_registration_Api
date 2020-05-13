@@ -27,3 +27,30 @@ exports.create = (req, res) => {
     }))
 }
 
+exports.findAll = (req,res)=>{
+
+        service.findAll(req,((err,data) =>{
+            if(err){
+                res.status(500).send({
+                    message:err.message || "Server Error"
+                })
+            }
+            res.send(data)           
+        }))
+    
+}
+    
+exports.findOne = (req,res) =>{
+    
+    service.findOne(req,((err,data) =>{
+        if(err){
+            res.status(500).send({
+                message:err.message || "Server Error"
+            })
+        }
+        
+        res.send(data)
+        
+    }))
+    
+}
