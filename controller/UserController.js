@@ -1,7 +1,8 @@
-const service = require("../service/user.service")
+const service = require("../service/UserService")
 const { check, validationResult } = require('express-validator');
 
-exports.create = (req, res) => {
+class UserController {
+    create = (req, res) => {
     check('firstName').isLength({ min : 3}).withMessage("Fistname must contain 3 characters")
     check('lastName').isLength({ min : 3}).withMessage("Lastname must contain 3 characters")
     check('emailId').isEmail().withMessage("Invalid Email")
@@ -25,9 +26,9 @@ exports.create = (req, res) => {
    
 }
 
-exports.findAll = (req,res)=>{
+login = (req,res)=>{
 
-        service.findAll(req,((err,data) =>{
+    service.login(req.body,((err,data) =>{
             if(err){
                 res.status(500).send({
                     message:err.message || "Server Error"
@@ -35,6 +36,9 @@ exports.findAll = (req,res)=>{
             }
             res.send(data)           
         }))
+
     
 }
+}
+module.exports = new UserController;
     
