@@ -1,39 +1,31 @@
-const Registration = require("../models/user.models")
+const userData = require("../app/models/user.models")
 
 exports.create = (register,callback) => {
     
-    const registration = new Registration() 
-    registration.firstName = register.firstName,
-    registration.lastName = register.lastName,
-    registration.emailId = register.emailId,
-    registration.password = register.password
+    const user = new userData() 
+    user.firstName = register.firstName,
+    user.lastName = register.lastName,
+    user.emailId = register.emailId,
+    user.password = register.password
 
-    registration.save().then(data => {
+    user.save().then(data => {
         console.log("data After save:",data)
         return callback(null,data)
-    }).catch(err =>{
+     })
+    .catch(err =>{
         return callback({message:"Some Error Occur while Registration"})
     })  
 
 }
 
+
 exports.findAll = (data,callback)=>{
     console.log("login object model ---",data)
 
-    Registration.find().then(data => {
+    userData.find().then(data => {
          return callback(null,data).json("login sucessfull")
     }).catch(err =>{
          return callback({message:"Error While reterving login id "})
     })
 
-}
-
-exports.findOne = (data,callback)=>{
-    console.log("login model ",data)
-
-    Registration.findById().then(data => {
-        return callback(null,data).json("login sucessful")
-    }).catch(err =>{
-        callback({message:"Error While reterving login id"})
-    })
 }

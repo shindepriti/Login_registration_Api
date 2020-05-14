@@ -5,8 +5,6 @@ module.exports  = (app) =>   {
     app.post('/register',user.create)
 
     app.get('/login',user.findAll)
-
-    app.get('/login/:id',user.findOne)
 }
 
 

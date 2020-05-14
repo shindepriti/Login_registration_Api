@@ -6,7 +6,7 @@ const app = express();
 
 //parse Text As url Encoded Data
 app.use(bodyParser.urlencoded({ extended: true }))
-
+ 
 // It parses incoming requests with JSON payloads and is based on body-parser.
 app.use(bodyParser.json())
 

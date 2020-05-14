@@ -1,30 +1,28 @@
 const service = require("../service/user.service")
+const { check, validationResult } = require('express-validator');
 
 exports.create = (req, res) => {
+    check('firstName').isLength({ min : 3}).withMessage("Fistname must contain 3 characters")
+    check('lastName').isLength({ min : 3}).withMessage("Lastname must contain 3 characters")
+    check('emailId').isEmail().withMessage("Invalid Email")
+    check('password').isLength({min:8}).withMessage("password must contain 8 character")
     
-    if(!req.body.emailId) {
-        return res.status(500).send({
-            message:"Registration Can Not Be Empty"
-        });
+    var errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+    else{
+        service.create(req.body,((err,data) => {
+            if(err){
+                res.status(500).send({
+                    message:err.message || "Some Error has Occured"
+                })
+            }
+            res.json(data)
+        }))
     }
-
-    const registration = {
-        firstName : req.body.firstName,
-        lastName : req.body.lastName,
-        emailId : req.body.emailId,
-        password : req.body.password
-
-    }
-    
-    service.create(registration,((err,data) => {
-        if(err){
-            req.status(500).send({
-                message:err.message || "Some Error has Occured"
-            })
-        }
-        console.log("Inside Controller",data)
-        res.json(data)
-    }))
+     
+   
 }
 
 exports.findAll = (req,res)=>{
@@ -40,17 +38,3 @@ exports.findAll = (req,res)=>{
     
 }
     
-exports.findOne = (req,res) =>{
-    
-    service.findOne(req,((err,data) =>{
-        if(err){
-            res.status(500).send({
-                message:err.message || "Server Error"
-            })
-        }
-        
-        res.send(data)
-        
-    }))
-    
-}
