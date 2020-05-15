@@ -1,5 +1,6 @@
 const service = require("../service/UserService")
 const { check, validationResult } = require('express-validator');
+const bcrypt = require("bcrypt")
 
 class UserController {
     create = (req, res) => {
@@ -13,7 +14,13 @@ class UserController {
         return res.status(422).json({ errors: errors.array() });
       }
     else{
-        service.create(req.body,((err,data) => {
+        var user = {
+            firstName: req.body.firstName,
+            lastName : req.body.lastName,
+            emailId : req.body.emailId,
+            password :bcrypt.hashSync( req.body.password,10)
+        }
+        service.create(user,((err,data) => {
             if(err){
                 res.status(500).send({
                     message:err.message || "Some Error has Occured"
