@@ -13,5 +13,20 @@ const userSchema = new mongoose.Schema({
 
 var userData = mongoose.model('user',userSchema)
 
+
+userData.login=(data,callback)=>{
+    userData.findOne(data)
+    .then(data => {
+        callback(null,data)
+    })
+    .catch(err => {
+        callback(
+           { message:"error to login"},
+           nulll
+        )
+    })
+}
+   
+
 module.exports = userData
 
