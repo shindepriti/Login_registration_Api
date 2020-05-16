@@ -1,6 +1,7 @@
-const service = require("../service/UserService")
+const service = require("../service/userService")
 const { check, validationResult } = require('express-validator');
 const bcrypt = require("bcrypt")
+const jsonTocken = require("jsonwebtoken")
 
 class UserController {
     create = (req, res) => {
@@ -33,18 +34,26 @@ class UserController {
    
 }
 
-login = (req,res)=>{
-
-    service.login(req.body,((err,data) =>{
-            if(err){
-                res.status(500).send({
-                    message:err.message || "Server Error"
-                })
+login=(req,res)=>{
+    service.login({emailId: req.body.emailId},(err,data)=>{
+        if(err){
+            res.send('Server Error');
+        }else if(data==undefined){
+                res.send('User Not Defined ');
             }
-            res.send(data)           
-        }))
-
-    
+            else {
+                let password = req.body.password
+                bcrypt.compare(password,data.password,(err,result)=>{
+                if(result){
+                    var token = jsonTocken.sign({password: data.password}, 'secretKey', {expiresIn: '1h'});
+                    res.send({message:'Login Successfull',token:token})
+                }
+                else {
+                    res.send('Login Info Incorrect')
+                }
+            })
+        }
+    });
 }
 }
 module.exports = new UserController;

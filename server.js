@@ -30,7 +30,7 @@ app.get('/',(req,res) => {
 });
 
 //setting registration route express app 
-require('./routes/UserRoutes')(app)
+require('./routes/userRoutes')(app)
 
 const dotenv = require('dotenv');
 dotenv.config();
