@@ -15,21 +15,21 @@ var userData = mongoose.model('user',userSchema)
 exports.create = (data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
-        return callback(err);
+        callback(err);
       }else if(data.length > 0){
        var response = {
           "error":true,
           "message":"Email Already Exist",
           "errorCode":404
         }
-        return callback(response)
+        callback(response)
       }else if(data==undefined || data==null){
           var response = {
               "error":true,
               "message":"User Undefinde Or Null",
               "errorCode":422
           }
-          return callback(response)
+          callback(response)
       }else{
         const user = new userData() 
         user.firstName = data.firstName,
@@ -38,10 +38,10 @@ exports.create = (data,callback) => {
         user.password = data.password
         
         user.save().then(data => {
-          return callback(null,data)
+            callback(null,data)
         })
         .catch(err =>{
-          return callback(err)
+          callback(err)
         })  
       }
 
