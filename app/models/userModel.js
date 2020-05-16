@@ -23,15 +23,14 @@ exports.create = (data,callback) => {
           "errorCode":404
         }
         return callback(response)
-      }else if(data==undefined || data==null || data==" "){
+      }else if(data==undefined || data==null){
           var response = {
               "error":true,
-              "message":"User Undefinde Or Null or Empty",
+              "message":"User Undefinde Or Null",
               "errorCode":422
           }
           return callback(response)
-      }
-      else{
+      }else{
         const user = new userData() 
         user.firstName = data.firstName,
         user.lastName = data.lastName,

@@ -4,6 +4,13 @@ const bcrypt = require("bcrypt")
 const jsonToken = require("jsonwebtoken")
 
 class UserController {
+
+    hash = (password) =>{
+        var salt = bcrypt.genSaltSync(10);
+        var hashPassword = bcrypt.hashSync(password,salt)
+        return hashPassword
+    }
+
     create = (req, res) => {
     check('firstName',"Fistname must contain 3 characters").isLength({ min : 3})
     check('lastName',"Lastname must contain 3 characters").isLength({ min : 3})
@@ -19,11 +26,10 @@ class UserController {
             firstName: req.body.firstName,
             lastName : req.body.lastName,
             emailId : req.body.emailId,
-            password :bcrypt.hashSync( req.body.password,10)
+            password :this.hash(req.body.password)
         }
         service.create(user,((err,data) => {
             if(err){
-                console.log("err")
                 res.status(500).send({
                     message:err
                 })
@@ -34,9 +40,7 @@ class UserController {
             }
             
         }))
-    }
-     
-   
+    } 
 }
 
 login=(req,res)=>{
