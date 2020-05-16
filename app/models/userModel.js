@@ -12,6 +12,36 @@ const userSchema = new mongoose.Schema({
 
 var userData = mongoose.model('user',userSchema)
 
+exports.create = (data,callback) => {
+    userData.find({'emailId':data.emailId},(err,data) =>{
+      if(err){
+        return callback(err);
+      }else if(data.length > 0){
+       var response = {
+          "error":true,
+          "message":"Email Already Exist",
+          "errorCode":404
+        }
+        return callback(response)
+      }
+      else{
+        const user = new userData() 
+        user.firstName = data.firstName,
+        user.lastName = data.lastName,
+        user.emailId = data.emailId,
+        user.password = data.password
+        
+        user.save().then(data => {
+          return callback(null,data)
+        })
+        .catch(err =>{
+          return callback(err)
+        })  
+      }
+
+    })
+}
+
 exports.findOne=(data,callback)=>{
     userData.findOne({})
     .then(data => {

@@ -5,10 +5,10 @@ const jsonToken = require("jsonwebtoken")
 
 class UserController {
     create = (req, res) => {
-    check('firstName').isLength({ min : 3}).withMessage("Fistname must contain 3 characters")
-    check('lastName').isLength({ min : 3}).withMessage("Lastname must contain 3 characters")
-    check('emailId').isEmail().withMessage("Invalid Email")
-    check('password').isLength({min:8}).withMessage("password must contain 8 character")
+    check('firstName',"Fistname must contain 3 characters").isLength({ min : 3})
+    check('lastName',"Lastname must contain 3 characters").isLength({ min : 3})
+    check('emailId',"Invalid Email").isEmail()
+    check('password',"password must contain 8 character").isLength({min:8})
     
     var errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -23,11 +23,16 @@ class UserController {
         }
         service.create(user,((err,data) => {
             if(err){
+                console.log("err")
                 res.status(500).send({
-                    message:err.message || "Some Error has Occured"
+                    message:err
+                })
+            }else{
+                res.status(200).send({
+                    message: data
                 })
             }
-            res.json(data)
+            
         }))
     }
      
