@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+
 // create express app
 const app = express();
 
@@ -31,7 +32,9 @@ app.get('/',(req,res) => {
 //setting registration route express app 
 require('./routes/UserRoutes')(app)
 
+const dotenv = require('dotenv');
+dotenv.config();
 
-app.listen(3000,() =>{
-        console.log("Server Listening On Port 3000")
+app.listen(process.env.PORT,() =>{
+        console.log(`Server Listening On Port ${process.env.PORT}`)
 })

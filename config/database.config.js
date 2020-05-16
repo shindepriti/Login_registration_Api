@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
-    url: 'mongodb://localhost:27017/loginRegistration'
+    url: process.env.DB_URL
 }

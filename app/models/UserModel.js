@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 const userSchema = new mongoose.Schema({
     firstName:{type : String,required : true,minlength:3},
     lastName:{type : String,required : true,minlength:3},
@@ -13,20 +12,16 @@ const userSchema = new mongoose.Schema({
 
 var userData = mongoose.model('user',userSchema)
 
-
-userData.login=(data,callback)=>{
-    userData.findOne(data)
+exports.findOne=(data,callback)=>{
+    userData.findOne({})
     .then(data => {
         callback(null,data)
     })
     .catch(err => {
-        callback(
-           { message:"error to login"},
-           nulll
-        )
+        callback({ message:"error to login"})
     })
 }
-   
-
 module.exports = userData
+
+   
 

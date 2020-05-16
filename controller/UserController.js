@@ -48,4 +48,3 @@ login = (req,res)=>{
 }
 }
 module.exports = new UserController;
-    
