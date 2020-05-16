@@ -1,10 +1,12 @@
-module.exports  = (app) =>   {
+const express = require('express')
+const router = express.Router()
 
     const user = require("../controller/userController")
 
-    app.post('/register',user.create)
+    router.post('/register',user.create)
 
-    app.get('/login',user.login)
-}
+    router.get('/login',user.login)
+
+module.exports=router
 
 

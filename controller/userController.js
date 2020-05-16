@@ -1,7 +1,7 @@
 const service = require("../service/userService")
 const { check, validationResult } = require('express-validator');
 const bcrypt = require("bcrypt")
-const jsonTocken = require("jsonwebtoken")
+const jsonToken = require("jsonwebtoken")
 
 class UserController {
     create = (req, res) => {
@@ -45,7 +45,7 @@ login=(req,res)=>{
                 let password = req.body.password
                 bcrypt.compare(password,data.password,(err,result)=>{
                 if(result){
-                    var token = jsonTocken.sign({password: data.password}, 'secretKey', {expiresIn: '1h'});
+                    var token = jsonToken.sign({password: data.password}, 'secretKey', {expiresIn: '1h'});
                     res.send({message:'Login Successfull',token:token})
                 }
                 else {

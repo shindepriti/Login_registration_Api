@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
-
+const route = require('./routes/userRoutes')
+require('dotenv').config();
 // create express app
 const app = express();
 
@@ -25,15 +25,7 @@ mongoose.connect(dbConfig.url,{
     process.exit();
 })
 
-app.get('/',(req,res) => {
-    res.json({"message":"Welcome To Registartion Page"})
-});
-
-//setting registration route express app 
-require('./routes/userRoutes')(app)
-
-const dotenv = require('dotenv');
-dotenv.config();
+app.use('/',route)
 
 app.listen(process.env.PORT,() =>{
         console.log(`Server Listening On Port ${process.env.PORT}`)
