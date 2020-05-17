@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    firstName:{type : String,required : true,minlength:3},
-    lastName:{type : String,required : true,minlength:3},
-    emailId:{type : String ,required : true,unique:true,match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']},
-    password:{type : String,required : true,minlength:8},
+    firstName:{type : String,require:true,minlength:3},
+    lastName:{type : String,require:true,minlength:1},
+    emailId:{type : String ,require:true,unique:true,match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']},
+    password:{type : String,require:true,minlength:8},
 },{
         timestamps:true
 
@@ -12,40 +12,40 @@ const userSchema = new mongoose.Schema({
 
 var userData = mongoose.model('user',userSchema)
 
-exports.create = (data,callback) => {
+userData.create = (data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
         callback(err);
       }else if(data.length > 0){
-       var response = {
-          "error":true,
-          "message":"Email Already Exist",
-          "errorCode":404
+        var response = {
+            "error":true,
+            "message":"Email Already Exist",
+            "errorCode":404
         }
         callback(response)
       }else if(data==undefined || data==null){
           var response = {
               "error":true,
               "message":"User Undefinde Or Null",
-              "errorCode":422
+              "errorCode":500
           }
           callback(response)
       }else{
-        const user = new userData() 
-        user.firstName = data.firstName,
-        user.lastName = data.lastName,
-        user.emailId = data.emailId,
-        user.password = data.password
+            const user = new userData() 
+            user.firstName = data.firstName,
+            user.lastName = data.lastName,
+            user.emailId = data.emailId,
+            user.password = data.password
         
-        user.save().then(data => {
-            callback(null,data)
-        })
-        .catch(err =>{
-          callback(err)
-        })  
-      }
-
+            user.save().then(data => {
+                callback(null,data)
+            })
+            .catch(err =>{
+                callback(err)
+            })
+        }
     })
+
 }
 
 exports.findOne=(data,callback)=>{
@@ -58,6 +58,3 @@ exports.findOne=(data,callback)=>{
     })
 }
 module.exports = userData
-
-   
-

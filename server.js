@@ -16,6 +16,12 @@ const dbConfig = require("./config/database.config") (mongoConnection)
 
 app.use('/',route)
 
+app.get("/",(req,res) =>{
+        res.json({ message :"User Backend Api"})
+})
+
 app.listen(process.env.PORT,() =>{
         console.log(`Server Listening On Port ${process.env.PORT}`)
 })
+
+module.exports = app
