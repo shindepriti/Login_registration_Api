@@ -30,7 +30,7 @@ class UserController {
             }
             service.create(user,(err,data) => {
                 if(err){
-                    res.status(500).json({
+                     res.status(500).json({
                         message:err
                     })
                 }else{

@@ -2,12 +2,12 @@ const userModels = require("../app/models/userModel")
 
 class UserService { 
 
-  create = (data,callback) => {
-    userModels.create(data,(err,result) => { 
+   create (data,callback)  {
+     userModels.create(data,(err,result) => { 
       if (err) {
-        callback(err);
+        return callback(err);
       }
-      callback(null, result)
+        return callback(null, result)
     })
   }
 

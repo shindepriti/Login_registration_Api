@@ -1,10 +1,31 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    firstName:{type : String,require:true,minlength:3},
-    lastName:{type : String,require:true,minlength:1},
-    emailId:{type : String ,require:true,unique:true,match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']},
-    password:{type : String,require:true,minlength:8},
+    firstName:{
+        type : String,
+        required:true,
+        minlength:3,
+        index :{
+            unique:true,
+        }
+    },
+    lastName:{
+        type : String,
+        required:true,
+        minlength:1,
+        index :{
+            unique:true
+        }
+    },
+    emailId:{
+        type : String,
+        required:true,
+        unique:true,
+        index:{
+            unique:true
+        },
+        match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']},
+    password:{type : String,required:true,minlength:8},
 },{
         timestamps:true
 
@@ -12,7 +33,10 @@ const userSchema = new mongoose.Schema({
 
 var userData = mongoose.model('user',userSchema)
 
-userData.create = (data,callback) => {
+function userModel (){
+
+}
+userModel.prototype.create =(data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
         callback(err);
