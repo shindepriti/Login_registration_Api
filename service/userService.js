@@ -12,7 +12,7 @@ class UserService {
   }
 
   login = (data,callback) => {
-      userModels.findOne(data,(err,result) => { 
+      userModels.login(data,(err,result) => { 
         if (err) {
           callback(err);
         }

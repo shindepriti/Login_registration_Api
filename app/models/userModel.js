@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
+const bcrypt = require("bcrypt")
+const jsonToken = require("jsonwebtoken")
 
-const userSchema = new mongoose.Schema({
+
+  const userSchema = new mongoose.Schema({
     firstName:{
         type : String,
         required:true,
@@ -19,19 +22,17 @@ const userSchema = new mongoose.Schema({
         index:{
             unique:true
         },
-        match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']},
+        match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']
+    },
     password:{type : String,required:true,minlength:8},
 },{
         timestamps:true
 
 });
+userData = mongoose.model('user',userSchema)
+ 
 
-var userData = mongoose.model('user',userSchema)
- function userModel(){
-
- }
-
-userModel.prototype.create =(data,callback) => {
+exports.create =(data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
         callback(err);
@@ -67,13 +68,28 @@ userModel.prototype.create =(data,callback) => {
 
 }
 
-exports.findOne=(data,callback)=>{
-    userData.findOne({})
-    .then(data => {
-        callback(null,data)
-    })
-    .catch(err => {
-        callback({ message:"error to login"})
+
+
+ exports.login=(data,callback)=>{
+    userData.findOne({emailId:data.emailId},(err,data)=>{
+        if(err){
+            callback('Server Error');
+        }else {
+            if(data){
+                var token = jsonToken.sign({password:data.password}, 'secretKey', {expiresIn: '1h'});
+                console.log(token)
+                let user ={
+                        message :"success",
+                        emailId : data.emailId,
+                        password : data.password,
+                        token : token
+                        }
+                        callback(null,user)
+                        }
+            else {
+                callback('Login Info Incorrect')
+            }    
+        }
     })
 }
-module.exports = userData
+
