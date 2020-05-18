@@ -1,14 +1,12 @@
 const mongoose = require('mongoose')
 const bcrypt = require("bcrypt")
 const jsonToken = require("jsonwebtoken")
-
-
-  const userSchema = new mongoose.Schema({
+const regex = require("../models/regexValid")
+const userSchema = new mongoose.Schema({
     firstName:{
         type : String,
         required:true,
         minlength:3,
-
     },
     lastName:{
         type : String,
@@ -22,17 +20,20 @@ const jsonToken = require("jsonwebtoken")
         index:{
             unique:true
         },
-        match:[/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']
+        match:regex.emailRegx()
     },
     password:{type : String,required:true,minlength:8},
 },{
         timestamps:true
 
 });
-userData = mongoose.model('user',userSchema)
- 
 
-exports.create =(data,callback) => {
+module.exports = userData = mongoose.model('user',userSchema)
+ 
+function  usermodel() {     
+}
+
+usermodel.prototype.create =(data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
         callback(err);
@@ -68,8 +69,6 @@ exports.create =(data,callback) => {
 
 }
 
-
-
  exports.login=(data,callback)=>{
     userData.findOne({emailId:data.emailId},(err,data)=>{
         if(err){
@@ -79,13 +78,13 @@ exports.create =(data,callback) => {
                 var token = jsonToken.sign({password:data.password}, 'secretKey', {expiresIn: '1h'});
                 console.log(token)
                 let user ={
-                        message :"success",
-                        emailId : data.emailId,
-                        password : data.password,
-                        token : token
-                        }
-                        callback(null,user)
-                        }
+                    message :"success",
+                    emailId : data.emailId,
+                    password : data.password,
+                    token : token
+                    }
+                    callback(null,user)
+            }
             else {
                 callback('Login Info Incorrect')
             }    

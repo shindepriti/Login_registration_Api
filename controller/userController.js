@@ -1,7 +1,7 @@
 const service = require("../service/userService")
+const validFields = require("../validation/userValid")
 const { check, validationResult } = require('express-validator');
 const bcrypt = require("bcrypt")
-const jsonToken = require("jsonwebtoken")
 
 class UserController {
 
@@ -12,14 +12,10 @@ class UserController {
     }
 
     create = (req, res) => {
-        check('firstName',"Fistname must contain 3 characters").isLength({ min : 3})
-        check('lastName',"Lastname must contain 3 characters").isLength({ min : 1})
-        check('emailId',"Invalid Email").isEmail()
-        check('password',"password must contain 8 character").isLength({min:8})
-        
-        var errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            return res.status(422).json({ errors: errors.array() });
+        if(validFields.dataValidation)
+            var errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(422).json({ errors: errors.array() });
         }
         else{
             var user = {
@@ -41,38 +37,15 @@ class UserController {
                 
             })
         } 
-    }
-
-    // login=(req,res)=>{
-    //     service.login({emailId: req.body.emailId},(err,data)=>{
-    //         if(err){
-    //             res.send('Server Error');
-    //         }else if(data==undefined){
-    //                 res.send('User Not Defined ');
-    //             }
-    //             else {
-    //                 let password = req.body.password
-    //                 bcrypt.compare(password,data.password,(err,result)=>{
-    //                 if(result){
-    //                     var token = jsonToken.sign({password: data.password}, 'secretKey', {expiresIn: '1h'});
-    //                     res.send({message:'Login Successfull',token:token})
-    //                 }
-    //                 else {
-    //                     res.send('Login Info Incorrect')
-    //                 }
-    //             })
-    //         }
-    //     })
-    // }
+    }    
 
     login = (req,res)=>{
-        check('emailId', 'Invalid em￼ail').isEmail();
-        check('password', 'passwor￼d must contain minimum 8 digits').isLength({ min: 8 });
-        var errors = validationResult(req);
-        var responseResult = {};
-        if (!errors.isEmpty()) {
-            return res.status(422).json({ errors: errors.array() });
-        } else {
+        if(validFields.dataValidation)
+            var errors = validationResult(req);
+            var responseResult = {};
+            if (!errors.isEmpty()) {
+                return res.status(422).json({ errors: errors.array() });
+        }else {
             var user = {
                 emailId : req.body.emailId,
                 password :req.body.password
@@ -82,13 +55,10 @@ class UserController {
                     responseResult.success = false;
                     responseResult.error = err;
                     res.status(422).send(responseResult)
-                } else {
-                     responseResult.success = true;
-                    var token = jsonToken.sign({password:result.password}, 'secretKey', {expiresIn: '1h'});
-                    responseResult.token = token.token;
+                }else {
+                     responseResult.success = true
                     responseResult.result = result
                     res.status(200).send(responseResult)
-
                 }
             })
         }
