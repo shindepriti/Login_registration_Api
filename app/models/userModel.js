@@ -5,17 +5,12 @@ const userSchema = new mongoose.Schema({
         type : String,
         required:true,
         minlength:3,
-        index :{
-            unique:true,
-        }
+
     },
     lastName:{
         type : String,
         required:true,
         minlength:1,
-        index :{
-            unique:true
-        }
     },
     emailId:{
         type : String,
@@ -33,10 +28,10 @@ const userSchema = new mongoose.Schema({
 
 var userData = mongoose.model('user',userSchema)
 
-function userModel (){
+// function userModel (){
 
-}
-userModel.prototype.create =(data,callback) => {
+// }
+userData.create =(data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
         callback(err);

@@ -13,7 +13,22 @@ describe(`user api test`,() => {
             expect(res.body.message).to.equals("User Backend Api")
         })
     })
-    
+
+    it(`givenUser_whenLogin_shouldReturnSucessMessage`,(done) =>{
+        let user = {
+             emailId:"sindepriti@gmail.com",
+             password:"shinde123"                            
+        }
+        chai
+        .request(app)
+        .get("/login")
+        .send(user)
+        .end((err,res) => {
+            expect(res).to.have.status(200)
+        })
+        done()
+    })
+
     it("givenNewUser_whenRegister_shouldReturnSucessMessage",(done) =>{
         
         let user = {
@@ -24,7 +39,7 @@ describe(`user api test`,() => {
         } 
         chai
         .request(app)
-        .post("/register")
+        .post("/register/")
         .send(user)
         .end((err,res) =>{
             expect(res).to.have.status(200);
@@ -33,6 +48,8 @@ describe(`user api test`,() => {
         })
         done()   
     })
+
+    
 
 
 
