@@ -27,11 +27,11 @@ const userSchema = new mongoose.Schema({
 });
 
 var userData = mongoose.model('user',userSchema)
+ function userModel(){
 
-// function userModel (){
+ }
 
-// }
-userData.create =(data,callback) => {
+userModel.prototype.create =(data,callback) => {
     userData.find({'emailId':data.emailId},(err,data) =>{
       if(err){
         callback(err);

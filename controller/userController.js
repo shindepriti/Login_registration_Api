@@ -35,7 +35,7 @@ class UserController {
                     })
                 }else{
                     res.status(200).json({
-                        message: data
+                        message: "Registration sucessfull",Data:data
                     })
                 }
                 
