@@ -1,3 +1,11 @@
+/***************************************************************
+ * @purpose  : Define Schema
+ * @file     : userService.js              
+ * @overview : Define Schema And Function To CRUD Operation
+ * @author   : priti shinde
+ * @since    : 13/5/2020
+***************************************************************/
+
 const mongoose = require('mongoose')
 const bcrypt = require("bcrypt")
 const jsonToken = require("jsonwebtoken")

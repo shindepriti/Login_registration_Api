@@ -1,3 +1,10 @@
+/*************************************************************
+ * @purpose : Require Express Framework And BodyParser
+ *            connetion Mongodb And Server
+ * @file    : server.js
+ * @author  : priti shinde
+ * @since   : 12/5/2020
+***********************************************************/
 const express = require('express');
 const bodyParser = require('body-parser');
 const route = require('./routes/userRoutes')

@@ -1,3 +1,11 @@
+/***************************************************************
+ * @purpose  : Define Login and Register Function 
+ * @file     : userController.js              
+ * @overview : Hash Function To Encrypt password And Send User 
+ *             Status Code And Response And Error
+ * @author   : priti shinde
+ * @since    : 12/5/2020
+***************************************************************/
 const service = require("../service/userService")
 const validFields = require("../validation/userValid")
 const { check, validationResult } = require('express-validator');

@@ -1,3 +1,11 @@
+/***************************************************************
+ * @purpose  : Define Mongodb Connection
+ * @file     : database.config.js              
+ * @overview : Define Mongoose To Connect With Mongodb Databse  
+ * @author   : priti shinde
+ * @since    : 11/5/2020
+***************************************************************/
+
 require('dotenv').config();
 const mongoose = require("mongoose")
 

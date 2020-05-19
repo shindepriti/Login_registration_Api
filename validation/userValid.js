@@ -1,3 +1,12 @@
+/**************************************************************
+ * @purpose  : Define Express Validation For Email 
+ * @file     : userValid.js
+ * @overview : Define Function To validate User When Register 
+ *             And Login. 
+ * @author   : priti shinde
+ * @since    : 18/5/2020
+**************************************************************/
+
 const { check} = require('express-validator');
 
 class userValidation {
@@ -8,9 +17,6 @@ class userValidation {
         check('emailId',"Invalid Email").isEmail()
         check('password',"password must contain 8 character").isLength({min:8})
 }
-    emailRegx(){
-        return [/^([a-zA-Z]{3,}([._+-]?[a-zA-Z0-9])*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}[.]?[a-zA-Z]*)$/,'is invalid']
-    }
-
+   
 }
 module.exports = new userValidation();
