@@ -1,6 +1,6 @@
 /***************************************************************
  * @purpose  : Define Schema
- * @file     : userService.js              
+ * @file     : userModel.js              
  * @overview : Define Schema And Function To CRUD Operation
  * @author   : priti shinde
  * @since    : 13/5/2020

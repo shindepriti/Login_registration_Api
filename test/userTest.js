@@ -1,3 +1,11 @@
+/***************************************************************
+ * @purpose  : Define Test Cases
+ * @file     : userTest.js              
+ * @overview : Test Cases To Check Code Working Or Not   
+ * @author   : priti shinde
+ * @since    : 17/5/2020
+***************************************************************/
+
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const app = require('../server')

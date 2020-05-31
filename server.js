@@ -9,6 +9,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const route = require('./routes/userRoutes')
 require('dotenv').config();
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./Swagger/swagger") 
 
 // create express app
 const app = express();
@@ -22,7 +24,7 @@ app.use(bodyParser.json())
 const dbConfig = require("./config/database.config") (mongoConnection)
 
 app.use('/',route)
-
+app.use("/swagger",swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 app.get("/",(req,res) =>{
         res.json({ message :"User Backend Api"})
 })

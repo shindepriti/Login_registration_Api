@@ -1,3 +1,11 @@
+/**************************************************************
+ * @purpose  : Define Regex Validation For Email 
+ * @file     : regexValid.js
+ * @overview : Define Function For Email Validation 
+ * @author   : priti shinde
+ * @since    : 18/5/2020
+**************************************************************/
+
 class valid {
 
     emailRegx(){
